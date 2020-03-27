@@ -1,0 +1,36 @@
+type User {
+  id: UUID!
+  username: String!
+  password: String!
+  email: String!
+  privilege: String!
+  active: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Query {
+  getUsers: [User!]
+}
+
+type Mutation {
+  createUser(input: CreateUserInput): User!
+  login(input: LoginInput): AuthPayload!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+  email: String!
+  privilege: String!
+  active: Boolean!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type AuthPayload {
+  token: String!
+}
