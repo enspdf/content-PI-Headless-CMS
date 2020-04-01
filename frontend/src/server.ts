@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import next from "next";
+import path from "path";
 
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
@@ -7,6 +8,12 @@ const handle = nextApp.getRequestHandler();
 
 nextApp.prepare().then(() => {
     const app = express();
+
+    app.use(express.static(path.join(__dirname, "../public")));
+
+    app.get("/login", (req, res) => {
+        return nextApp.render(req, res, "/users/login", req.query);
+    });
 
     app.all("*", (req: Request, res: Response) => {
         return handle(req, res);

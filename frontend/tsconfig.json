@@ -27,7 +27,18 @@
     "noEmit": true,
     "moduleResolution": "Node",
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "paths": {
+      "@app/*": [
+        "app/*"
+      ],
+      "@pages/*": [
+        "pages/*"
+      ],
+      "@shared/*": [
+        "shared/*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts",
