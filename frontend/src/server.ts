@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import session from "express-session";
 import config from "./config";
+import user, { isConnected } from "./shared/lib/middlewares/user";
 
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
@@ -24,9 +25,14 @@ nextApp.prepare().then(() => {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser(config.security.secretKey));
     app.use(cors({ credentials: true, origin: true }));
+    app.use(user);
 
-    app.get("/login", (req, res) => {
+    app.get("/login", isConnected(false), (req, res) => {
         return nextApp.render(req, res, "/users/login", req.query);
+    });
+
+    app.use("/dashboard", isConnected(true, ["god", "admin", "editor"], "/login?redirectTo=/dashboard"), (req, res) => {
+        return nextApp.render(req, res, "/dashboard", req.query);
     });
 
     app.all("*", (req: Request, res: Response) => {

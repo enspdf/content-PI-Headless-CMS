@@ -1,15 +1,45 @@
-import React, { FC } from "react";
-import { DarkButton, PrimaryButton, Input } from "fogg-ui";
-import { cx } from "fogg-utils";
+import React, { FC, ReactElement, useState, useContext, useEffect } from "react";
+import { Alert, RenderIf, DarkButton, PrimaryButton, Input } from "fogg-ui";
+import { cx, redirectTo } from "fogg-utils";
+
+import { FormContext } from "@contexts/form";
+
 import Logo from "@shared/components/layouts/main/Logo";
 
 import styles from "./Login.scss";
 
-const Login: FC = () => {
+import { IUser } from "@interfaces";
+interface IProps {
+    login(input: any): any;
+    currentUrl: string;
+}
+
+const Login: FC<IProps> = ({ login, currentUrl }) => {
+    const [errorMessage, setErrorMessage] = useState("");
+    const [invalidLogin, setInvalidLogin] = useState(false);
+
+    const { onChange, values } = useContext(FormContext);
+
+    const handleLogin = async (user: IUser) => {
+        const response = await login(user);
+
+        if (response.error) {
+            setInvalidLogin(true);
+            setErrorMessage(response.message);
+        } else {
+            redirectTo(currentUrl || "/");
+        }
+    };
+
     return (
         <>
+            <RenderIf isTrue={invalidLogin}>
+                <Alert danger center flat>
+                    {errorMessage}
+                </Alert>
+            </RenderIf>
             <div className={styles.login}>
-                <div className={cx(styles.wrapper, styles.ready)}>
+                <div className={styles.wrapper}>
                     <div className={styles.form}>
                         <div className={styles.logo}>
                             <Logo />
@@ -21,6 +51,8 @@ const Login: FC = () => {
                             className={styles.email}
                             name="email"
                             placeholder="Email"
+                            onChange={onChange}
+                            value={values.email}
                         />
 
                         <Input
@@ -29,13 +61,15 @@ const Login: FC = () => {
                             className={styles.password}
                             name="password"
                             placeholder="Password"
+                            onChange={onChange}
+                            value={values.password}
                         />
 
                         <div className={styles.actions}>
                             <div className={styles.left}>
-                                <DarkButton name="login">Login</DarkButton>
-                &nbsp;
-                <PrimaryButton name="register">Register</PrimaryButton>
+                                <DarkButton name="login" onClick={() => handleLogin(values)}>Login</DarkButton>
+                                &nbsp;
+                                <PrimaryButton name="register">Register</PrimaryButton>
                             </div>
                         </div>
                     </div>
