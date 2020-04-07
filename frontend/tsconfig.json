@@ -9,11 +9,12 @@
     "sourceMap": false,
     "target": "ES6",
     "types": [
-      "node"
+      "node",
+      "express"
     ],
     "typeRoots": [
-      "src/typings",
-      "./node_modules/@types"
+      "typings",
+      "../node_modules/@types"
     ],
     "lib": [
       "DOM",
@@ -31,6 +32,9 @@
     "paths": {
       "@app/*": [
         "app/*"
+      ],
+      "@config": [
+        "config"
       ],
       "@pages/*": [
         "pages/*"
