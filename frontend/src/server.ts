@@ -27,11 +27,11 @@ nextApp.prepare().then(() => {
     app.use(cors({ credentials: true, origin: true }));
     app.use(user);
 
-    app.get("/login", isConnected(false), (req, res) => {
+    app.get("/login", isConnected(false), (req: any, res: any) => {
         return nextApp.render(req, res, "/users/login", req.query);
     });
 
-    app.use("/dashboard", isConnected(true, ["god", "admin", "editor"], "/login?redirectTo=/dashboard"), (req, res) => {
+    app.use("/dashboard", isConnected(true, ["god", "admin", "editor"], "/login?redirectTo=/dashboard"), (req: any, res: any) => {
         return nextApp.render(req, res, "/dashboard", req.query);
     });
 

@@ -1,3 +1,4 @@
 import React from "react";
+import DashboardLayout from "@app/dashboard/components/Layout";
 
-export default () => <h1>Dashboard Page</h1>
+export default () => <DashboardLayout />;
