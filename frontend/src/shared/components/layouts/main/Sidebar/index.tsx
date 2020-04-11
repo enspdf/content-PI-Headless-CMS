@@ -42,7 +42,7 @@ const Sidebar: FC = (): ReactElement => {
                 </ul>
 
                 <section className={styles.profile}>
-                    <span title="Carlos Santana">CS</span>
+                    <span title="Username">UN</span>
                 </section>
             </section>
 

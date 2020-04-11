@@ -31,8 +31,18 @@ nextApp.prepare().then(() => {
         return nextApp.render(req, res, "/users/login", req.query);
     });
 
-    app.use("/dashboard", isConnected(true, ["god", "admin", "editor"], "/login?redirectTo=/dashboard"), (req: any, res: any) => {
-        return nextApp.render(req, res, "/dashboard", req.query);
+    app.use(`/dashboard/:appId?/:stage?/:moduleName?`, isConnected(true, ["god", "admin", "editor"], "/login?redirectTo=/dashboard"), (req: any, res: any) => {
+        const { appId, stage, moduleName } = req.params;
+        let page = "/dashboard";
+
+        if (appId && stage) {
+            page = !moduleName ? "/dashboard/home" : `/dashboard/${moduleName}`;
+        }
+
+        return nextApp.render(req, res, page, {
+            ...req.params,
+            ...req.query
+        });
     });
 
     app.all("*", (req: Request, res: Response) => {

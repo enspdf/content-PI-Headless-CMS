@@ -1,14 +1,14 @@
 import React, { FC, ReactElement, useContext } from "react";
 import Head from "next/head";
-import { UserContext } from "@contexts/user";
-import Header from "@shared/components/layouts/main/Header";
-import Content from "@shared/components/layouts/main/Content";
-import Sidebar from "@shared/components/layouts/main/Sidebar";
+import Apps from "./Apps";
+import Home from "./Home";
 import styles from "./Layout.scss";
 
-const Layout: FC = (): ReactElement => {
-    const { user } = useContext(UserContext);
+interface IProps {
+    moduleName?: string;
+};
 
+const Layout: FC<IProps> = ({ moduleName = "" }): ReactElement => {
     return (
         <>
             <Head>
@@ -17,14 +17,11 @@ const Layout: FC = (): ReactElement => {
             </Head>
 
             <div className={styles.layout}>
-                <Sidebar />
-
-                <Content>
-                    <Header />
-                </Content>
+                {moduleName === "Home" && <Home />}
+                {!moduleName && <Apps />}
             </div>
         </>
-    );
-};
+    )
+}
 
-export default Layout;
+export default Layout
