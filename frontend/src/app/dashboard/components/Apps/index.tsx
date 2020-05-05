@@ -1,9 +1,9 @@
 import React, { FC, ReactElement, useContext, useEffect } from "react";
 import Head from "next/head";
 import { AppContext } from "@contexts/app";
-import GET_APPS_QUERY from "@graphql/apps/apps.query";
-import Logo from "@shared/components/layouts/main/Logo";
-import Cards from "@shared/components/layouts/main/Cards";
+import GET_APPS_QUERY from "@graphql/apps/getApps.query";
+import Logo from "@layouts/main/Logo";
+import Cards from "@layouts/main/Cards";
 import styles from "./Apps.scss";
 
 const Apps: FC = (): ReactElement => {

@@ -21,7 +21,10 @@ export function User(req: any) {
                     return cb(false);
                 }
 
-                return cb(getBase64(user));
+                const userData = getBase64(user);
+                req.user = userData;
+
+                return cb(userData);
             }
         );
     }

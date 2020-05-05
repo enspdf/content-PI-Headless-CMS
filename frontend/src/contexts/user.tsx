@@ -1,4 +1,4 @@
-import React, { FC, createContext, useState, ReactElement } from "react";
+import React, { FC, createContext, ReactElement } from "react";
 import { useApolloClient } from "react-apollo-hooks";
 import { useCookies } from "react-cookie";
 import { getGraphQlError } from "fogg-utils";
@@ -12,6 +12,7 @@ interface IUserContext {
 
 interface IProps {
     children: ReactElement;
+    connectedUser?: object;
 };
 
 export const UserContext = createContext<IUserContext>({
@@ -19,10 +20,10 @@ export const UserContext = createContext<IUserContext>({
     user: {}
 });
 
-const UserProvider: FC<IProps> = ({ children }): ReactElement => {
+const UserProvider: FC<IProps> = ({ children, connectedUser }): ReactElement => {
     const { mutate } = useApolloClient();
     const [, setCookie] = useCookies();
-    const [user, setUser] = useState([]);
+
 
     async function login(input: { email: string; password: string; }) {
         try {
@@ -36,7 +37,6 @@ const UserProvider: FC<IProps> = ({ children }): ReactElement => {
 
             if (data) {
                 setCookie("at", data.login.token, { path: "/" });
-                setUser(data.login.token);
 
                 return data.login.token;
             }
@@ -47,7 +47,7 @@ const UserProvider: FC<IProps> = ({ children }): ReactElement => {
 
     const context = {
         login,
-        user
+        user: connectedUser
     };
 
     return <UserContext.Provider value={context}>{children}</UserContext.Provider>

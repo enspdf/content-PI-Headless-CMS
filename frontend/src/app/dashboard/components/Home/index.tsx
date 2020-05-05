@@ -1,7 +1,7 @@
 import React, { FC, ReactElement } from "react";
-import Header from "@shared/components/layouts/main/Header";
-import Content from "@shared/components/layouts/main/Content";
-import Sidebar from "@shared/components/layouts/main/Sidebar";
+import Header from "@layouts/main/Header";
+import Content from "@layouts/main/Content";
+import Sidebar from "@layouts/main/Sidebar";
 
 const Home: FC = (): ReactElement => {
     return (

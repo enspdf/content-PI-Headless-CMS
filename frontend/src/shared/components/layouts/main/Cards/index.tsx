@@ -1,7 +1,8 @@
 import React, { FC, ReactElement, useState } from "react";
 import { Icon, Modal } from "fogg-ui";
-import Link from "@shared/components/ui/Link";
+import Link from "@ui/Link";
 import styles from "./Cards.scss";
+import CreateAppModal from "@layouts/main/Modals/CreateAppModal";
 
 interface IProps {
     items: any[]
@@ -15,9 +16,7 @@ const Cards: FC<IProps> = ({ items }): ReactElement => {
 
     return (
         <>
-            <Modal isOpen={isOpen} label="Create New App" options={{ position: "center", width: "400px" }} onClose={handleModal}>
-                <p>Content</p>
-            </Modal>
+            <CreateAppModal label="Create New App" isOpen={isOpen} onClose={handleModal} options={{ position: "center", width: "400px" }} />
 
             <section className={styles.cards}>
                 <h1>{title}</h1>

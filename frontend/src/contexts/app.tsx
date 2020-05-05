@@ -4,6 +4,7 @@ import { getGraphQlError, getQueryName } from "fogg-utils";
 
 interface IAppContext {
     get(options: any): any;
+    post(options: any): any;
     state: any;
 };
 
@@ -13,17 +14,18 @@ interface IProps {
 
 export const AppContext = createContext<IAppContext>({
     get: () => null,
+    post: () => null,
     state: {}
 });
 
 const AppProvider: FC<IProps> = ({ children }): ReactElement => {
-    const { query: queryFn } = useApolloClient();
+    const { query: queryFn, mutate } = useApolloClient();
     const [state, setState] = useState({});
 
     async function get(options: any) {
         const { query, variables = {} } = options;
 
-        const queryName = getQueryName(query);
+        const queryName: any = getQueryName(query);
 
         try {
             const { data } = await queryFn({
@@ -43,8 +45,32 @@ const AppProvider: FC<IProps> = ({ children }): ReactElement => {
         }
     }
 
+    async function post(options: any): Promise<any> {
+        const { mutation, variables = {} } = options
+
+        const mutationName: any = getQueryName(mutation)
+
+        try {
+            const { data } = await mutate({
+                mutation,
+                variables
+            })
+
+            if (data) {
+                setState({
+                    [mutationName]: data[mutationName]
+                })
+
+                return data
+            }
+        } catch (err) {
+            return getGraphQlError(err)
+        }
+    }
+
     const context = {
         get,
+        post,
         state
     };
 

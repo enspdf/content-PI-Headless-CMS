@@ -1,10 +1,12 @@
 type App {
   id: UUID!
+  userId: UUID!
   appName: String!
   icon: String!
   description: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  apps: [App!]
 }
 
 type Query {
@@ -19,4 +21,5 @@ input CreateInputApp {
   appName: String!
   icon: String!
   description: String!
+  userId: UUID!
 }

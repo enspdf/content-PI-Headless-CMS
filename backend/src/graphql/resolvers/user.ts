@@ -4,7 +4,14 @@ import { doLogin } from "../../utils/auth";
 export default {
     Query: {
         getUsers: (_: object, _args: object, { models }: { models: IModels }): IUser[] => {
-            return models.User.findAll();
+            return models.User.findAll({
+                include: [
+                    {
+                        model: models.App,
+                        as: "apps"
+                    }
+                ]
+            });
         }
     },
     Mutation: {
