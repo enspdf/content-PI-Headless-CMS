@@ -4,9 +4,10 @@ import { AppContext } from "@contexts/app";
 import GET_APPS_QUERY from "@graphql/apps/getApps.query";
 import Logo from "@layouts/main/Logo";
 import Cards from "@layouts/main/Cards";
-import styles from "./Apps.scss";
+import MainLayout from "@layouts/main/MainLayout";
+import styles from "./MyApps.scss";
 
-const Apps: FC = (): ReactElement => {
+const MyApps: FC = (): ReactElement => {
     const { get, state } = useContext(AppContext);
 
     useEffect(() => {
@@ -26,13 +27,8 @@ const Apps: FC = (): ReactElement => {
     }
 
     return (
-        <>
-            <Head>
-                <title>Dashboard</title>
-                <meta name="title" content="Dashboard" />
-            </Head>
-
-            <div className={styles.apps}>
+        <MainLayout title="MyApps">
+            <div className={styles.myApps}>
                 <div className={styles.header}>
                     <div className={styles.logo}>
                         <Logo />
@@ -41,8 +37,8 @@ const Apps: FC = (): ReactElement => {
 
                 <Cards items={state.getApps} />
             </div>
-        </>
+        </MainLayout>
     )
 };
 
-export default Apps;
+export default MyApps;

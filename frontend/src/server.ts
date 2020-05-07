@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import session from "express-session";
 import config from "./config";
-import user, { isConnected } from "./shared/lib/middlewares/user";
+import { isConnected } from "./shared/lib/middlewares/user";
 
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
@@ -25,10 +25,13 @@ nextApp.prepare().then(() => {
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(cookieParser(config.security.secretKey));
     app.use(cors({ credentials: true, origin: true }));
-    app.use(user);
 
     app.get("/login", isConnected(false), (req: any, res: any) => {
-        return nextApp.render(req, res, "/users/login", req.query);
+        return nextApp.render(req, res, "/users/login");
+    });
+
+    app.use("/dashboard/playground", isConnected(true, ["god", "admin"], "/login?redirectTo=/dashboard"), (req: any, res: any) => {
+        return nextApp.render(req, res, "/dashboard/playground");
     });
 
     app.use(`/dashboard/:appId?/:stage?/:moduleName?`, isConnected(true, ["god", "admin", "editor"], "/login?redirectTo=/dashboard"), (req: any, res: any) => {
@@ -39,10 +42,7 @@ nextApp.prepare().then(() => {
             page = !moduleName ? "/dashboard/home" : `/dashboard/${moduleName}`;
         }
 
-        return nextApp.render(req, res, page, {
-            ...req.params,
-            ...req.query
-        });
+        return nextApp.render(req, res, page);
     });
 
     app.all("*", (req: Request, res: Response) => {

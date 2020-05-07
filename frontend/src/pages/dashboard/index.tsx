@@ -6,9 +6,9 @@ import UserProvider from "@contexts/user";
 import FormProvider from "@contexts/form";
 import DashboardLayout from "@app/dashboard/components/Layout";
 
-const DashboardPage = ({ user }: { user: any }): ReactElement => (
+const DashboardPage = (): ReactElement => (
     <ApolloProvider client={useApolloClient()}>
-        <UserProvider connectedUser={user}>
+        <UserProvider >
             <AppProvider>
                 <FormProvider>
                     <DashboardLayout />
@@ -17,9 +17,5 @@ const DashboardPage = ({ user }: { user: any }): ReactElement => (
         </UserProvider>
     </ApolloProvider>
 );
-
-DashboardPage.getInitialProps = ({ req }: { req: any }): any => ({
-    user: req.user
-});
 
 export default DashboardPage;

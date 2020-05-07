@@ -1,23 +1,23 @@
 import React, { FC, ReactElement } from "react";
 import Footer from "../Footer";
-import Fields from "../Fields";
+import Header from "../Header";
 import styles from "./Content.scss";
 
 interface IProps {
+    header?: boolean;
+    footer?: boolean;
     children: ReactElement;
 };
 
-const content: FC<IProps> = ({ children }): ReactElement => (
+const content: FC<IProps> = ({ children, header, footer }): ReactElement => (
     <section className={styles.content}>
-        {children}
+        {header && <Header />}
         <div className={styles.container}>
             <div className={styles.wrapper}>
-                <h1>Dashboard</h1>
-                <p>Content</p>
+                {children}
             </div>
-            <Fields />
         </div>
-        <Footer />
+        {footer && <Footer />}
     </section >
 );
 
