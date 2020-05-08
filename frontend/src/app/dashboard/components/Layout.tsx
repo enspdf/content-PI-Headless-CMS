@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext } from "react";
+import React, { FC, ReactElement, memo } from "react";
 import MyApps from "./MyApps";
 import Home from "./Home";
 
@@ -15,4 +15,4 @@ const Layout: FC<IProps> = ({ moduleName = "" }): ReactElement => {
     )
 }
 
-export default Layout
+export default memo(Layout);

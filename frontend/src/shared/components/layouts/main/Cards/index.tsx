@@ -1,8 +1,9 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useState, memo } from "react";
 import { Icon, Modal } from "fogg-ui";
 import Link from "@ui/Link";
 import styles from "./Cards.scss";
 import CreateAppModal from "@layouts/main/Modals/CreateAppModal";
+import AppIcon from "../AppIcon";
 
 interface IProps {
     items: any[]
@@ -26,10 +27,7 @@ const Cards: FC<IProps> = ({ items }): ReactElement => {
                             <li key={app.id}>
                                 <Link href={`/dashboard/${app.id}/master`}>
                                     <section className={styles.card} title={app.description}>
-                                        <section className={styles.app} style={{ backgroundColor: app.icon }}>
-                                            {app.appName.substring(0, 2)}
-                                        </section>
-                                        <span>{app.appName}</span>
+                                        <AppIcon app={app} />
                                     </section>
                                 </Link>
                             </li>
@@ -40,7 +38,7 @@ const Cards: FC<IProps> = ({ items }): ReactElement => {
                             <section className={styles.app}>
                                 <Icon type="fas fa-plus" />
                             </section>
-                            <span>Create New App</span>
+                            <span className={styles.createNewApp}>Create New App</span>
                         </section>
                     </li>
                 </ul>
@@ -49,4 +47,4 @@ const Cards: FC<IProps> = ({ items }): ReactElement => {
     );
 };
 
-export default Cards;
+export default memo(Cards);

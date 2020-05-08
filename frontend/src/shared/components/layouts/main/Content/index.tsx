@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, memo } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
 import styles from "./Content.scss";
@@ -21,4 +21,4 @@ const content: FC<IProps> = ({ children, header, footer }): ReactElement => (
     </section >
 );
 
-export default content;
+export default memo(content);

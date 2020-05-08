@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState, useContext, useEffect } from "react";
+import React, { FC, useState, useContext, memo } from "react";
 import { Alert, RenderIf, DarkButton, PrimaryButton, Input } from "fogg-ui";
 import { cx, redirectTo } from "fogg-utils";
 
@@ -79,4 +79,4 @@ const Login: FC<IProps> = ({ login, currentUrl }) => {
     )
 }
 
-export default Login;
+export default memo(Login);

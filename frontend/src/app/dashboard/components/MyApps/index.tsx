@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useContext, useEffect } from "react";
+import React, { FC, ReactElement, useContext, useEffect, memo } from "react";
 import Head from "next/head";
 import { AppContext } from "@contexts/app";
 import GET_APPS_QUERY from "@graphql/apps/getApps.query";
@@ -41,4 +41,4 @@ const MyApps: FC = (): ReactElement => {
     )
 };
 
-export default MyApps;
+export default memo(MyApps);

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, memo } from "react";
 import styles from "./Header.scss";
 import BreadCrumbs from "../Breadcrumbs";
 
@@ -10,4 +10,4 @@ const Header: FC = (): ReactElement => {
     );
 };
 
-export default Header;
+export default memo(Header);

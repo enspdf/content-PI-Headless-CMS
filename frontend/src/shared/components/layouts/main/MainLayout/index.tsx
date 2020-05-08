@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, memo } from "react";
 import Head from "next/head";
 import Content from "../Content";
 import Sidebar from "../Sidebar";
@@ -41,4 +41,4 @@ const MainLayout: FC<IProps> = ({
     );
 };
 
-export default MainLayout;
+export default memo(MainLayout);

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import Link from "@ui/Link";
 import styles from "./Logo.scss";
 
@@ -12,4 +12,4 @@ const Logo = () => {
     )
 }
 
-export default Logo
+export default memo(Logo);

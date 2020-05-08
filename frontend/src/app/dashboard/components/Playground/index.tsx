@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, memo } from "react";
 import MainLayout from "@layouts/main/MainLayout";
 import styles from "./Playground.scss";
 
@@ -15,4 +15,4 @@ const Playground: FC = (): ReactElement => {
     );
 };
 
-export default Playground;
+export default memo(Playground);

@@ -1,6 +1,7 @@
-import React, { FC, createContext, useState, ReactElement } from "react";
+import React, { FC, createContext, useState, useEffect, ReactElement } from "react";
 import { useApolloClient } from "react-apollo-hooks";
-import { getGraphQlError, getQueryName } from "fogg-utils";
+import { getGraphQlError, getQueryName, getParamsFromUrl } from "fogg-utils";
+import GET_APP_BY_ID_QUERY from "@graphql/apps/getAppById.query";
 
 interface IAppContext {
     get(options: any): any;
@@ -67,6 +68,20 @@ const AppProvider: FC<IProps> = ({ children }): ReactElement => {
             return getGraphQlError(err)
         }
     }
+
+    useEffect(() => {
+        const { appId } = getParamsFromUrl(["page", "appId", "stage"]);
+        console.log(appId);
+
+        if (appId) {
+            get({
+                query: GET_APP_BY_ID_QUERY,
+                variables: {
+                    id: appId
+                }
+            });
+        }
+    }, []);
 
     const context = {
         get,
